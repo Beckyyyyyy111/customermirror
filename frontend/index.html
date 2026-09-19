@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Customer Mirror</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="app">
+  <header class="app-header">
+    <div class="logo"><span class="logo-mark">🪞</span> Customer Mirror</div>
+    <div class="tagline">Talk to simulated customers, investors, and advisors. Find out what you actually proved.</div>
+  </header>
+
+  <!-- SCREEN 1: BRIEF -->
+  <section id="screen-brief" class="screen">
+    <div class="hero">
+      <div class="hero-copy">
+        <span class="hero-badge">✨ From idea to your first discovery call</span>
+        <h1 class="hero-title">Talk to a panel that<br /><span class="hero-accent">doesn't just agree with you.</span></h1>
+        <p class="hero-desc">Describe your idea. We generate skeptical AI customers, investors, and advisors —
+          then show you exactly what you proved, and what you didn't.</p>
+        <div class="hero-steps">
+          <div class="hero-step"><span class="hero-step-num">01</span><span>Describe your idea</span></div>
+          <div class="hero-step"><span class="hero-step-num">02</span><span>Interview your panel</span></div>
+          <div class="hero-step"><span class="hero-step-num">03</span><span>Get your debrief</span></div>
+        </div>
+      </div>
+
+      <form id="brief-form" class="hero-form">
+        <h2>Describe what you're testing</h2>
+        <label>
+          <span class="label-text">💡 Product / idea</span>
+          <textarea name="product_description" id="product-description-input" rows="3" required
+            placeholder="An AI agent that drafts weekly investor updates from your Slack + Notion activity"></textarea>
+        </label>
+        <label>
+          <span class="label-text">🎯 Target customer</span>
+          <input type="text" name="target_customer" required
+            placeholder="Seed-stage startup founders" />
+        </label>
+        <label>
+          <span class="label-text">🧪 Hypothesis you want to test</span>
+          <input type="text" name="key_hypothesis" required
+            placeholder="Founders will pay $30/mo to stop writing investor updates manually" />
+        </label>
+        <label>
+          <span class="label-text">📈 Stage</span>
+          <select name="stage">
+            <option value="idea">Just an idea</option>
+            <option value="prototype">Have a prototype</option>
+            <option value="launched">Already launched</option>
+          </select>
+        </label>
+        <button type="submit" class="btn-primary btn-block">Meet your simulated panel</button>
+        <p class="hero-form-footnote">Personas are AI simulations built for practice — not a substitute for real customer conversations.</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- SCREEN 1.5: CANDIDATES -->
+  <section id="screen-candidates" class="screen hidden">
+    <div class="candidates-head">
+      <h2>Choose who to interview</h2>
+      <p id="candidates-status" class="candidates-status"></p>
+    </div>
+
+    <div class="persona-group" id="group-customer">
+      <div class="persona-group-header">
+        <span class="persona-group-icon icon-customer">🧑‍💼</span>
+        <div>
+          <h3>AI Customers</h3>
+          <p>Potential buyers — guarded, real budgets, won't volunteer objections unless asked well.</p>
+        </div>
+      </div>
+      <div id="grid-customer" class="candidate-grid"></div>
+    </div>
+
+    <div class="persona-group" id="group-investor">
+      <div class="persona-group-header">
+        <span class="persona-group-icon icon-investor">💼</span>
+        <div>
+          <h3>AI Investors</h3>
+          <p>Potential funders — evaluating market, traction, and moat through a VC lens.</p>
+        </div>
+      </div>
+      <div id="grid-investor" class="candidate-grid"></div>
+    </div>
+
+    <div class="persona-group" id="group-advisor">
+      <div class="persona-group-header">
+        <span class="persona-group-icon icon-advisor">🎓</span>
+        <div>
+          <h3>Advisor Panel</h3>
+          <p>AI simulations of well-known operators and investors, built from their public interviews and
+            writing — proactive, opinionated, not verified or endorsed by the real people.</p>
+        </div>
+      </div>
+      <div id="grid-advisor" class="candidate-grid"></div>
+    </div>
+
+    <div class="report-actions sticky-actions">
+      <button id="btn-generate-report" class="btn-primary" disabled>Generate report</button>
+    </div>
+  </section>
+
+  <!-- SCREEN 2: INTERVIEW (meeting room) -->
+  <section id="screen-interview" class="screen hidden">
+    <div class="meeting-room">
+      <div class="meeting-topbar">
+        <div class="meeting-live"><span class="live-dot"></span>LIVE</div>
+        <div class="meeting-title">Customer Discovery Call</div>
+        <div class="meeting-timer" id="meeting-timer">00:00</div>
+      </div>
+
+      <div class="video-grid">
+        <div class="video-tile customer-tile" id="customer-tile">
+          <video id="avatar-video" autoplay playsinline></video>
+          <div id="avatar-loading" class="avatar-loading hidden"><span class="avatar-spinner"></span><span>Connecting live digital human…</span></div>
+          <div id="avatar-fallback" class="avatar-fallback hidden">
+            <div class="avatar-wrap">
+              <svg class="avatar-svg" viewBox="0 0 200 200">
+                <circle id="avatar-head" cx="100" cy="100" r="90"></circle>
+                <ellipse class="eye" cx="70" cy="85" rx="8" ry="10"></ellipse>
+                <ellipse class="eye" cx="130" cy="85" rx="8" ry="10"></ellipse>
+                <ellipse id="avatar-mouth" cx="100" cy="135" rx="22" ry="6"></ellipse>
+              </svg>
+            </div>
+          </div>
+          <div class="tile-badge">
+            <span class="tile-name" id="persona-name">—</span>
+            <span class="tile-role" id="persona-role">—</span>
+          </div>
+          <div class="captions" id="captions"></div>
+        </div>
+
+        <div class="video-tile self-tile" id="self-tile">
+          <video id="self-video" autoplay muted playsinline></video>
+          <div class="self-fallback" id="self-fallback">🧑‍💻</div>
+          <div class="tile-badge small">You</div>
+        </div>
+      </div>
+
+      <div class="meeting-controls">
+        <button id="btn-mic" class="control-btn" title="Hands-free mic — click to mute/unmute, or to send early">🎙️</button>
+        <button id="btn-camera" class="control-btn" title="Toggle camera">📷</button>
+        <button id="btn-transcript" class="control-btn" title="Show transcript">💬</button>
+        <button id="btn-end" class="control-btn end-btn" title="End this interview">☎</button>
+      </div>
+      <div id="status-line" class="status-line"></div>
+
+      <div id="transcript-panel" class="transcript-panel hidden">
+        <div class="transcript-panel-header">
+          <span>Transcript</span>
+          <button id="btn-close-transcript" class="btn-secondary">Close</button>
+        </div>
+        <div id="transcript" class="transcript"></div>
+        <div class="composer">
+          <input id="text-input" type="text" placeholder="Type your question instead…" />
+          <button id="btn-send" class="btn-primary">Ask</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREEN 3: REPORT -->
+  <section id="screen-report" class="screen hidden">
+    <div class="card report-card">
+      <h2>Interview debrief</h2>
+
+      <div id="report-sections"></div>
+
+      <div id="cross-synthesis" class="report-section hidden">
+        <h3>Across all interviews</h3>
+        <p id="cross-synthesis-text" class="evidence-text"></p>
+      </div>
+
+      <div class="report-actions">
+        <button id="btn-back-to-candidates" class="btn-secondary">Interview someone else</button>
+        <button id="btn-download-pdf" class="btn-secondary">Download PDF</button>
+        <button id="btn-restart" class="btn-primary">Try a new idea</button>
+      </div>
+    </div>
+  </section>
+</div>
+<script type="module" src="app.js"></script>
+</body>
+</html>
