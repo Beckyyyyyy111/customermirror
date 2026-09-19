@@ -19,6 +19,13 @@ style), which ones worked, and what to ask next — downloadable as a PDF.
 The point isn't a compliant AI that likes your idea. It's practicing how to get real signal out of guarded,
 skeptical people before you spend that credibility on real customers and investors.
 
+## Screenshots
+
+| | |
+|---|---|
+| ![Landing page](screenshots/hero.png) | ![Choose who to interview](screenshots/candidates.png) |
+| ![Live interview with an advisor](screenshots/interview-buffett.png) | ![Interview debrief report](screenshots/report.png) |
+
 ## How it works
 
 1. Fill in the product brief form.
